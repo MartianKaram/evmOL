@@ -529,7 +529,7 @@ body.wb-full #shell{padding-right:0}
     if(!QD)p=legacy(paper);
     else{
       var e=(QD['p'+paper]||{})[sec];
-      p=e?load(e.f).then(function(){},function(){throw new Error('Could not load the Practise Paper '+paper+' questions for objective '+sec+'. Check that the qdata folder is in the same folder as this page.');}):Promise.resolve();
+      p=e?Promise.all([].concat(e.f).map(load)).then(function(){},function(){throw new Error('Could not load the Practise Paper '+paper+' questions for objective '+sec+'. Check that the qdata folder is in the same folder as this page.');}):Promise.resolve();
     }
     p.catch(function(){delete cache[k];});
     return cache[k]=p;
